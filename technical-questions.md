@@ -1,5 +1,6 @@
 1) I spent around 2 to 2.5 hours on this test. If I would have had more time,
-I would have implemented lazy loading / paginated results on the Front End. 
+I would have implemented lazy loading / paginated results on the Front End.
+I would have also added more CSS styling.
 I could have also used graphql to get much more streamlined data.
 
 2) React Hooks has been used, which is a pretty new feature.
