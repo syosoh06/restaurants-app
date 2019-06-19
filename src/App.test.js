@@ -1,9 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react";
+import Enzyme, { shallow } from "enzyme";
+import App from "./App";
+import RestaurantsList from './components/Restaurants-List/restaurants-list.connector';
+import Adapter from "enzyme-adapter-react-16";
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+Enzyme.configure({ adapter: new Adapter() });
+
+describe("App component", () => {
+    test("renders correctly and has the neccessary child components", () => {
+        const wrapper = shallow(<App />);
+
+        expect(wrapper.exists()).toBe(true);
+        expect(wrapper.type()).toBe('div');
+        expect(wrapper.childAt(0).type()).toBe(RestaurantsList);
+    });
 });
