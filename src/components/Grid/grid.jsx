@@ -1,14 +1,30 @@
 import React from "react";
-import ReactDataGrid from "react-data-grid";
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import PropTypes from "prop-types";
 
 export default function Grid(props) {
-    const {columns, rows} = props;
+    const {columnDefs, rowData} = props;
 
-    return (<ReactDataGrid
-        columns={columns}
-        rowGetter={i => rows[i]}
-        rowsCount={rows.length}
-    />);
+    return (<div className="ag-theme-balham-dark ag-grid-container">
+        <AgGridReact
+            columnDefs={columnDefs}
+            rowData={rowData}
+            deltaRowDataMode
+            getRowNodeId={(data) => data.id}
+        >
+        </AgGridReact>
+    </div>);
 }
+
+Grid.defaultProps = {
+    columnDefs: [],
+    rowData: []
+};
+Grid.propTypes = {
+    columnDefs: PropTypes.array,
+    rowData: PropTypes.array
+};
 
 

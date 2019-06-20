@@ -2,33 +2,47 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from "../Grid/grid";
 
-const columns = [
-    { key: "name", name: "Name" },
-    { key: "address", name: "Address" },
-    { key: "city", name: "City" },
-    { key: "price", name: "Price" }
+const columnDefs = [
+    { field: "name", headerName: "Name" },
+    { field: "address", headerName: "Address" },
+    { field: "city", headerName: "City" },
+    { field: "price", headerName: "Price" }
 ];
 
 function RestaurantsList(props) {
     const [state, setState] = useState({restaurantName: ''});
     const handleChange = (event) => {
         setState({restaurantName: event.target.value});
-        props.fetchRestaurantsByName(state.restaurantName);
+
+        if(state.restaurantName.length) {
+            props.fetchRestaurantsByName(state.restaurantName);
+        }
     };
+    const displayNoResultsWell = () => (state.restaurantName && !props.restaurants.length) ?
+          (<div className=" well well-lg ">
+              No Results Found
+          </div>) : null;
 
     return (<div>
         <div>
-            <label>
-                <span>Enter a City Name:  </span>
-                <input type="text" value={state.restaurantName} onChange={handleChange} />
-            </label>
+            <form className = "search-form">
+                <div className="input-group">
+                    <input type="text"
+                           value={state.restaurantName}
+                           onChange={handleChange}
+                           className="form-control"
+                           placeholder="Enter a city name" />
+                </div>
+            </form>
         </div>
-        <div>
+        {
+            props.restaurants.length && state.restaurantName.length ? (<div>
             <Grid
-                columns={columns}
-                rows={props.restaurants}
+                columnDefs={columnDefs}
+                rowData={props.restaurants}
             />
-        </div>
+        </div>) : displayNoResultsWell()
+        }
     </div>);
 }
 
